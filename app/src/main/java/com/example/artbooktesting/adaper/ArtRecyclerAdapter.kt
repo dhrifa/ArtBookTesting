@@ -1,5 +1,6 @@
 package com.example.artbooktesting.adaper
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import com.example.artbooktesting.R
 import com.example.artbooktesting.roomdb.Art
 import javax.inject.Inject
 
+private const val TAG = "ArtRecyclerAdapter"
 class ArtRecyclerAdapter @Inject constructor(
     val glide: RequestManager
 ) : RecyclerView.Adapter<ArtRecyclerAdapter.ArtViewHolder>() {
@@ -41,12 +43,13 @@ class ArtRecyclerAdapter @Inject constructor(
     }
 
     override fun onBindViewHolder(holder: ArtViewHolder, position: Int) {
-        val imageView = holder.itemView.findViewById<ImageView>(R.id.artImageView)
+        val imageView = holder.itemView.findViewById<ImageView>(R.id.artRowImageView)
         val nameText = holder.itemView.findViewById<TextView>(R.id.artRowNameText)
         val artistNameText = holder.itemView.findViewById<TextView>(R.id.artRowArtistNameText)
         val yearText = holder.itemView.findViewById<TextView>(R.id.artRowYearText)
         val art = arts[position]
         holder.itemView.apply {
+            Log.d(TAG, "onBindViewHolder: ${art.imageUrl}")
             nameText.text = "Name: ${art.name}"
             artistNameText.text = "Artist Name: ${art.artistName}"
             yearText.text = "Year: ${art.year}"
