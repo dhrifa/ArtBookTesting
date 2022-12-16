@@ -1,4 +1,4 @@
-package com
+package com.example.artbooktesting
 
 import android.app.Application
 import android.content.Context

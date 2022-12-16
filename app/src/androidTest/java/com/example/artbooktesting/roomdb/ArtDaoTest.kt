@@ -6,35 +6,52 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.filters.SmallTest
 import com.example.artbooktesting.getOrAwaitValue
 import com.google.common.truth.Truth.assertThat
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import javax.inject.Inject
+import javax.inject.Named
 
 @SmallTest
 @ExperimentalCoroutinesApi
+@HiltAndroidTest
 class ArtDaoTest {
 
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
-    private lateinit var dataBase: ArtDataBase
+    @get:Rule
+    var hiltRule = HiltAndroidRule(this)
+
+    @Inject
+    @Named("testDatabase")
+    lateinit var database: ArtDataBase
+
+    //private lateinit var database: ArtDataBase used before dependency injection
     private lateinit var dao: ArtDao
 
     @Before
     fun setup(){
+        /*
+        used before DI
         dataBase = Room.inMemoryDatabaseBuilder(
             ApplicationProvider.getApplicationContext(), ArtDataBase::class.java
         ).allowMainThreadQueries().build()
+        */
 
-        dao = dataBase.artDao()
+        hiltRule.inject()
+
+        dao = database.artDao()
     }
 
     @After
     fun tearDown(){
-        dataBase.close()
+        database.close()
     }
 
     @Test
