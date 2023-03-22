@@ -84,7 +84,16 @@ class ArtViewModel @Inject constructor(
             images.value = response
         }
     }
-
+fun compare(a: Array<Int>, b: Array<Int>): Array<Int>{
+    val r = arrayOf(0,0)
+    var s: Long = a.sum() as Long
+    if(a.max()<= 100 && b.max()<=100){
+        for (i in  0 .. 2){
+           if ( a[i]> b[i]) r[0]++ else r[1]++
+        }
+    }
+    return r
+}
 
 
 }

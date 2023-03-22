@@ -1,5 +1,6 @@
 package com.example.artbooktesting.view
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.test.espresso.Espresso
@@ -24,6 +25,7 @@ class ArtFragmentTest {
     @get:Rule
     var hiltRule = HiltAndroidRule(this)
 
+
     @Inject
     lateinit var fragmentFactory: ArtFragmentFactory
 
@@ -42,10 +44,11 @@ class ArtFragmentTest {
             Navigation.setViewNavController(requireView(),navController)
         }
 
-        //mimick click button
+        //mimic click button
         Espresso.onView(ViewMatchers.withId(R.id.fab)).perform(ViewActions.click())
 
-        //check if nav has been chamged after tthe click
+        //check if nav has been changed after the click
         Mockito.verify(navController).navigate(ArtFragmentDirections.actionArtFragmentToArtDetailsFragment())
     }
+
 }
